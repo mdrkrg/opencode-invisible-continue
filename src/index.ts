@@ -35,13 +35,14 @@ export function invisibleContinuePart(): InvisibleContinuePart {
   }
 }
 
-export function registerContinueCommand(config: CommandConfig): void {
+export function registerContinueCommand(config: CommandConfig): boolean {
   const commands = config.command ?? (config.command = {})
-  if (commands[CONTINUE_COMMAND]) return
+  if (commands[CONTINUE_COMMAND]) return false
   commands[CONTINUE_COMMAND] = {
     description: CONTINUE_COMMAND_DESCRIPTION,
     template: "",
   }
+  return true
 }
 
 export function applyInvisibleContinue(

@@ -22,11 +22,25 @@ describe("continue plugin", () => {
 
   test("hides the prompt parts of the continue command", async () => {
     const hooks = await plugin(input)
+    await hooks.config?.({ command: {} } as never)
     const parts: unknown[] = [{ type: "text", text: "resolved template" }]
     await hooks["command.execute.before"]?.(
       { command: CONTINUE_COMMAND, sessionID: "session", arguments: "" },
       { parts } as never,
     )
     expect(parts).toEqual([invisibleContinuePart()])
+  })
+
+  test("leaves a user-defined continue command alone", async () => {
+    const hooks = await plugin(input)
+    await hooks.config?.({
+      command: { [CONTINUE_COMMAND]: { description: "custom", template: "keep me" } },
+    } as never)
+    const parts: unknown[] = [{ type: "text", text: "custom template" }]
+    await hooks["command.execute.before"]?.(
+      { command: CONTINUE_COMMAND, sessionID: "session", arguments: "" },
+      { parts } as never,
+    )
+    expect(parts).toEqual([{ type: "text", text: "custom template" }])
   })
 })
