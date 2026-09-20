@@ -1,9 +1,28 @@
 {
   "name": "opencode-invisible-continue",
-  "module": "index.ts",
+  "version": "0.1.0",
+  "description": "Invisible session continuation for opencode: resume the agent loop without sending prompt text the model can read",
   "type": "module",
-  "devDependencies": {},
-  "peerDependencies": {
+  "main": "continue.ts",
+  "exports": {
+    ".": "./continue.ts",
+    "./server": "./continue.ts"
+  },
+  "files": [
+    "continue.ts",
+    "src/",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "bun test test",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "opencode"
+  ],
+  "devDependencies": {
+    "@opencode-ai/plugin": "1.18.23",
+    "@types/bun": "latest",
     "typescript": "^5"
   }
 }
